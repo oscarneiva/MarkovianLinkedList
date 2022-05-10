@@ -1,50 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
+
+type Point struct {
+	x float64
+	y float64
+}
+
+type Line struct {
+	p1 Point
+	p2 Point
+}
+
+func (l Line) calculateDistance() float64{
+	return math.Sqrt(math.Pow(l.p1.x - l.p2.x,2) + math.Pow(l.p1.y - l.p2.y,2))
+}
 
 func main() {
-	list := LinkedList{}
-	list.addNode()
-	list.addNode()
-	list.showList()
+	l := Line{Point{1,1}, Point{2,2}}
+	fmt.Println(l.calculateDistance())
 }
 
-type Element struct {
-	label string
-	rank float32
-}
 
-type Node struct {
-	element Element
-	nextNode *Node
-}
-
-type LinkedList struct {
-	length int
-	head *Node
-	tail *Node
-}
-
-func (list LinkedList) addNode(){
-	chars := []rune("abcdefghijklmnopqrtuvwxyz")
-	var charsIndex int
-	if list.length == 0 {
-		charsIndex = 0
-		e := Element{string(chars[charsIndex]), 0}
-		n := Node{e, nil}
-		charsIndex++
-		list.length = charsIndex
-		list = LinkedList{charsIndex, &n, &n}
-	}else{
-		n := Node{Element{string(chars[charsIndex]), 0}, nil}
-		charsIndex++
-		list.length = charsIndex
-		list.tail = &n
-	}
-}
-
-func (list LinkedList) showList(){
-	fmt.Println(list)
-}
 
 
