@@ -1,33 +1,40 @@
 package main
 
-import (
-	"fmt"
-	"math"
-)
+import "fmt"
 
-type Point struct {
-	x float64
-	y float64
+type Node struct {
+	name string
+	rank float64
+	next *Node
 }
 
-type Line struct {
-	p1 Point
-	p2 Point
+type LinkedList struct {
+	size int
+	tail *Node
+	head *Node
 }
 
-func (l *Line) calculateDistance() float64 {
-	distance := math.Sqrt(math.Pow(l.p1.x-l.p2.x, 2) + math.Pow(l.p1.y-l.p2.y, 2))
-	l.p1.x = 1000
-	return distance
+func (list *LinkedList) addNode(n *Node) {
+	if list.size == 0 {
+		list.tail = n
+		list.head = n
+		list.size++
+		return
+	}
+	list.tail.next = n
+	list.tail = n
+	list.size++
 }
 
-//func New(x1 float64, y1 float64, x2 float64, y2 float64) *Line{
-//	return &Line{Point{x1,y1}, Point{x2,y2}}
-//}
+func New(name string, rank float64) *Node {
+	return &Node{name, rank, nil}
+}
 
 func main() {
-	//l := New(1,1,2,2)
-	l := Line{Point{1, 1}, Point{2, 2}}
-	fmt.Println(l.calculateDistance()) // Use values in the constructor to calculate distance
-	fmt.Println(l.calculateDistance()) // Print value after changing l.p1.x to 1000
+	l := LinkedList{}
+	l.addNode(New("Google", 0.5))
+	l.addNode(New("Facebook", 0.3))
+	l.addNode(New("Amazon", 0.2))
+
+	fmt.Println(l)
 }
